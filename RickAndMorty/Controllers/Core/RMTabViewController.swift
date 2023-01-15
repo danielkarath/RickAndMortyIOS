@@ -7,6 +7,11 @@
 
 import UIKit
 
+/// printSomething is the new "print" function since fucking autocomplete works against me with printContent
+public func printSomething(something: String){
+   print(something)
+}
+
 /// Controller to house tabs and tab view controllers
 final class RMTabViewController: UITabBarController {
 
