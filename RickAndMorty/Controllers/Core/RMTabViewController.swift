@@ -7,21 +7,27 @@
 
 import UIKit
 
-/// printSomething is the new "print" function since fucking autocomplete works against me with printContent
-public func printSomething(something: String){
-   print(something)
-}
-
 /// Controller to house tabs and tab view controllers
 final class RMTabViewController: UITabBarController {
 
+    private let fullBlurView: UIVisualEffectView = {
+        let view = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        //view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        view.clipsToBounds = true
+        return view
+    }()
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = RMConstants.midBackgroundColor
         setupTabs()
     }
 
     private func setupTabs() {
+        view.backgroundColor = RMConstants.darkBackgroundColor.withAlphaComponent(0.0)
+        view.addSubview(fullBlurView)
         let viewControllers: [UIViewController] = [RMCharacterViewController(), RMLocationViewController(), RMEpisodeViewController(), RMSettingsViewController()]
+        let inactiveMenuIcons: [UIImage] = [UIImage(named: "characterIconInactive")!, UIImage(named: "locationIconInactive")!, UIImage(named: "movieIconInactive")!, UIImage(named: "settingsIconInactive")!]
         let titles: [String] = ["Characters", "Locations", "Episodes", "Settings"]
         var navControllers: [UINavigationController] = []
         var i: Int = 0
@@ -34,9 +40,16 @@ final class RMTabViewController: UITabBarController {
         }
         for navController in navControllers {
             navController.navigationBar.prefersLargeTitles = true
+            navController.navigationBar.titleTextAttributes = [.foregroundColor: RMConstants.highlightedTextColor]
+            navController.navigationBar.largeTitleTextAttributes = [.foregroundColor: RMConstants.highlightedTextColor]
+            navController.navigationBar.addSubview(fullBlurView)
+            navController.navigationBar.backgroundColor = RMConstants.darkBackgroundColor.withAlphaComponent(0.0)
+            tabBar.tintColor = RMConstants.mainColor
+            tabBar.layer.cornerRadius = 16
+            tabBar.layer.masksToBounds = true
             navController.tabBarItem = UITabBarItem(
                 title: titles[j],
-                image: nil,
+                image: inactiveMenuIcons[j],
                 tag: j
             )
             j = j + 1
