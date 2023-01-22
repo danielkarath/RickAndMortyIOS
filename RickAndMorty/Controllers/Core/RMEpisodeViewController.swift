@@ -12,6 +12,7 @@ final class RMEpisodeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        overrideUserInterfaceStyle = .dark
         title = "Episodes"
         // Do any additional setup after loading the view.
     }

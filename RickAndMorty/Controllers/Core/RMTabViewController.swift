@@ -19,6 +19,7 @@ final class RMTabViewController: UITabBarController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        overrideUserInterfaceStyle = .dark
         view.backgroundColor = RMConstants.midBackgroundColor
         setupTabs()
     }

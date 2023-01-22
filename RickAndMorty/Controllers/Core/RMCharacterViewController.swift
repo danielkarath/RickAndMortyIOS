@@ -14,6 +14,7 @@ final class RMCharacterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        overrideUserInterfaceStyle = .dark
         title = "Characters"
         setupConstraints()
     }

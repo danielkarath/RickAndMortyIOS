@@ -33,9 +33,19 @@ struct RMConstants {
     static let basicTextColor: UIColor = UIColor(red: 212/255, green: 212/255, blue: 216/255, alpha: 1.0)
     
     ///The activeBackgroundColor is the UIColor for active or highlighted, backgrounds. It's the same color as the keyboard
-    static let secondaryTextColor: UIColor = UIColor(red: 212/255, green: 162/255, blue: 166/255, alpha: 1.0)
+    static let secondaryTextColor: UIColor = UIColor(red: 162/255, green: 162/255, blue: 166/255, alpha: 1.0)
     
     ///The activeBackgroundColor is the UIColor for active or highlighted, backgrounds. It's the same color as the keyboard
     static let inactiveTextColor: UIColor = UIColor(red: 90/255, green: 90/255, blue: 94/255, alpha: 1.0)
+    
+    
+    //MARK: Font
+    public static func setFont(fontSize: CGFloat, isBold: Bool) -> UIFont {
+        if isBold {
+            return UIFont(name: "Avenir Next Demi Bold", size: fontSize)!
+        } else {
+            return UIFont(name: "Avenir Next Regular", size: fontSize)!
+        }
+    }
     
 }
