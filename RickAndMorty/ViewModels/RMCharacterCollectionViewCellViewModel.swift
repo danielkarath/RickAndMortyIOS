@@ -24,7 +24,7 @@ private let characterImageURL: URL?
     }
     
     public var characterStatus: String {
-        return characterStatusText.rawValue
+        return "Status: \(characterStatusText.text)"
     }
     
     public func fetchImage(completion: @escaping (Result<Data, Error>) -> Void) {

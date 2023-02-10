@@ -12,4 +12,10 @@ enum RMCharacterStatus: String, Codable {
     case alive = "Alive"
     case dead = "Dead"
     case `unknown` = "unknown"
+    
+    
+    /// This modifies the enum String outout so that it's always capitalized by default. Use "RMCharacterStatus.text" instead of "RMCharacterStatus.rawValue"
+    var text: String {
+        return self.rawValue.capitalized(with: .current)
+    }
 }

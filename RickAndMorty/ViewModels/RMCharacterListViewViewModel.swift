@@ -7,15 +7,41 @@
 
 import UIKit
 
+protocol RMCharacterListViewViewModelDelegate: AnyObject {
+    func didLoadInitialCharacters()
+}
+
+
 final class RMCharacterListViewViewModel: NSObject {
     
+    public weak var delegate: RMCharacterListViewViewModelDelegate?
+    
+    /// Array of RMCharacter fetched by fetchCharacters method. Whenever a character is fetched it's added to the cellViewModels (array of RMCharacterCollectionViewCellViewModel) that is used to populate the cells with data.
+    private var characters: [RMCharacter] = [] {
+        didSet {
+            for character in characters {
+                let viewModel = RMCharacterCollectionViewCellViewModel(characterName: character.name, characterStatusText: character.status, characterImageURL: URL(string: character.image))
+                cellViewModels.append(viewModel)
+            }
+        }
+    }
+    
+    /// Array of RMCharacterCollectionViewCellViewModel to populate the RMCharacterCollectionViewCell cells with data
+    private var cellViewModels: [RMCharacterCollectionViewCellViewModel] = []
+    
+    /// The fetchCharacter method calls the execute API method in RMService that utilizes the Rick and Morthy API to fetch characters.
     public func fetchCharacters() {
-        RMService.shared.execute(.listCharactersRequests, expecting: RMGetAllCharactersResponse.self) { result in
+        RMService.shared.execute(
+            .listCharactersRequests,
+            expecting: RMGetAllCharactersResponse.self
+        ) { [weak self] result in
             switch result {
-            case .success(let model):
-                print("Total: "+String(model.info.pages))
-                print("Page result count: "+String(model.results.count))
-                print("Example image:"+String(model.results.first?.image ?? "no image fetched"))
+            case .success(let responseModel):
+                let results = responseModel.results
+                self?.characters = results
+                DispatchQueue.main.async {
+                    self?.delegate?.didLoadInitialCharacters()
+                }
             case .failure(let error):
                 print(String(describing: error))
             }
@@ -26,7 +52,7 @@ final class RMCharacterListViewViewModel: NSObject {
 
 extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return cellViewModels.count ?? 50
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -34,11 +60,8 @@ extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollection
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterCollectionViewCell.identifier, for: indexPath) as? RMCharacterCollectionViewCell else {
             fatalError("Unsupported cell")
         }
-        let exampleURL: URL = URL(string: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")!
-        let viewModel = RMCharacterCollectionViewCellViewModel(
-            characterName: "Rick",
-            characterStatusText: .alive,
-            characterImageURL: exampleURL)
+
+        let viewModel = cellViewModels[indexPath.row]
         cell.configure(with: viewModel)
         return cell
     }
