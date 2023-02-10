@@ -7,8 +7,14 @@
 
 import UIKit
 
+protocol RMCharacterListViewDelegate: AnyObject {
+    func rmCharacterListView(_ characterListView: RMCharacterListView, didSelectCharacter: RMCharacter)
+}
+
 ///View that handles showing list of characters
 class RMCharacterListView: UIView {
+    
+    public weak var delegate: RMCharacterListViewDelegate?
     
     private let viewModel = RMCharacterListViewViewModel()
     
@@ -30,6 +36,7 @@ class RMCharacterListView: UIView {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         collectionView.alpha = 0.0
         collectionView.isHidden = true
+        collectionView.register(RMFooterLoadingCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier)
         return collectionView
     }()
     
@@ -75,14 +82,22 @@ class RMCharacterListView: UIView {
 
 extension RMCharacterListView: RMCharacterListViewViewModelDelegate {
     
+    func didSelectCharacter(_ character: RMCharacter) {
+        delegate?.rmCharacterListView(self, didSelectCharacter: character)
+    }
+    
     func didLoadInitialCharacters() {
-        
         self.spinner.stopAnimating()
         self.collectionView.isHidden = false
         collectionView.reloadData() //initial fetch
-        
         UIView.animate(withDuration: 0.4, delay: .zero) {
             self.collectionView.alpha = 1.0
+        }
+    }
+    
+    func didLoadMoreCharacters(with newIndexPaths: [IndexPath]) {
+        collectionView.performBatchUpdates {
+            self.collectionView.insertItems(at: newIndexPaths)
         }
     }
     
