@@ -47,7 +47,7 @@ class RMCharacterListView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = RMConstants.darkBackgroundColor
         
-        setupConstraints()
+        addConstraints()
         spinner.startAnimating()
         viewModel.delegate = self
         viewModel.fetchCharacters()
@@ -58,7 +58,7 @@ class RMCharacterListView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupConstraints() {
+    private func addConstraints() {
         addSubviews(collectionView, spinner)
         NSLayoutConstraint.activate([
             spinner.heightAnchor.constraint(equalToConstant: 100),

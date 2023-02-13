@@ -10,7 +10,7 @@ import UIKit
 
 /// View for a single character with info
 final class RMCharacterDetailView: UIView {
-        
+    
     private let viewModel: RMCharacterDetailViewModel
     
     public var collectionView: UICollectionView?
@@ -64,7 +64,9 @@ final class RMCharacterDetailView: UIView {
             return self.createSection(for: sectionIndexColor)
         }
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(RMCharacterPhotoCollectionViewCell.self, forCellWithReuseIdentifier: RMCharacterPhotoCollectionViewCell.cellIdentifier)
+        collectionView.register(RMCharacterInfoCollectionViewCell.self, forCellWithReuseIdentifier: RMCharacterInfoCollectionViewCell.cellIdentifier)
+        collectionView.register(RMCharacterEpisodeCollectionViewCell.self, forCellWithReuseIdentifier: RMCharacterEpisodeCollectionViewCell.cellIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }
@@ -73,56 +75,13 @@ final class RMCharacterDetailView: UIView {
         let sectionType = viewModel.sections
         switch sectionType[sectionIndex] {
         case .photo:
-            return createPhotoSectionLayout()
+            return viewModel.createPhotoSectionLayout()
         case .information:
-            return createInformationSectionLayout()
+            return viewModel.createInformationSectionLayout()
         case .episodes:
-            return createEpisodesSectionLayout()
+            return viewModel.createEpisodesSectionLayout()
         default:
             print("Unknown")
         }
     }
-    
-    private func createPhotoSectionLayout() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        )
-        //Ads spacing between the items
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
-        let group = NSCollectionLayoutGroup.vertical(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(150)),
-            subitems: [item]
-        )
-        let section = NSCollectionLayoutSection(group: group)
-        return section
-    }
-    
-    private func createInformationSectionLayout() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        )
-        //Ads spacing between the items
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
-        let group = NSCollectionLayoutGroup.vertical(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(150)),
-            subitems: [item]
-        )
-        let section = NSCollectionLayoutSection(group: group)
-        return section
-    }
-    
-    private func createEpisodesSectionLayout() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        )
-        //Ads spacing between the items
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
-        let group = NSCollectionLayoutGroup.vertical(
-            layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(150)),
-            subitems: [item]
-        )
-        let section = NSCollectionLayoutSection(group: group)
-        return section
-    }
-    
 }

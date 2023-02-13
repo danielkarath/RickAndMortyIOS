@@ -40,7 +40,6 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         imageView.image = UIImage(named: "RickAndMortyCharacterPlaceholderImage")
         imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
         return imageView
     }()
     
