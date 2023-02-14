@@ -104,10 +104,10 @@ final class RMCharacterDetailViewModel {
         )
         //Ads spacing between the items
         item.contentInsets = NSDirectionalEdgeInsets(
-            top: 2,
-            leading: 2,
-            bottom: 2,
-            trailing: 14
+            top: 20,
+            leading: 6,
+            bottom: 10,
+            trailing: 20
         )
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(

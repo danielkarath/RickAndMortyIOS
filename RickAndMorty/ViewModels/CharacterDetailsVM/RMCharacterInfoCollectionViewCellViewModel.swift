@@ -30,11 +30,8 @@ final class RMCharacterInfoCollectionViewCellViewModel {
     }
     public var displayValue: String {
         if value.isEmpty { return "unknown" }
-            //2017-11-04T18:50:21.651Z     yyyy-MM-dd HH:mm:ss
-            //y-MM-dd H:mm:ss.SSSS
             if let date = Self.dateFormatter.date(from: value), type == .created {
                 let result = Self.shortDateFormatter.string(from: date)
-                print(result)
                 return result
             }
         
