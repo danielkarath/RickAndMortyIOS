@@ -16,6 +16,7 @@ final class RMCharacterInfoCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = RMConstants.setFont(fontSize: 18, isBold: true)
+        label.textColor = RMConstants.basicTextColor
         label.text = "Earth"
         return label
     }()
