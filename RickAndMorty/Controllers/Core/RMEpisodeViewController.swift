@@ -9,23 +9,38 @@ import UIKit
 
 /// Controller to show and serach for episode
 final class RMEpisodeViewController: UIViewController {
-
+    
+    private let episodeListView = RMEpisodeListView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .dark
         title = "Episodes"
-        // Do any additional setup after loading the view.
+        setupConstraints()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func setupConstraints() {
+        view.addSubview(episodeListView)
+        NSLayoutConstraint.activate([
+            episodeListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -16),
+            episodeListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0),
+            episodeListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0),
+            episodeListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 32),
+        ])
+        episodeListView.delegate = self
     }
-    */
 
 }
+
+//MARK: Delegate implementation
+
+extension RMEpisodeViewController: RMEpisodeListViewDelegate {
+    func rmEpisodeListView(_ episodeListView: RMEpisodeListView, didSelectEpisode episode: RMEpisode) {
+        //open controller for episode
+        //let viewModel = RMEpisodeDetailViewViewModel(endpointURL: URL(string: episode.url))
+        let detailVC = RMEpisodeDetailViewController(url: URL(string: episode.url))
+        detailVC.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+}
+
