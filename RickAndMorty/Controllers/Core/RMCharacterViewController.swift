@@ -17,6 +17,15 @@ final class RMCharacterViewController: UIViewController {
         overrideUserInterfaceStyle = .dark
         title = "Characters"
         setupConstraints()
+        addSearchButton()
+    }
+    
+    private func addSearchButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .search,
+            target: self,
+            action: #selector(didTapSearch)
+        )
     }
     
     private func setupConstraints() {
@@ -28,6 +37,12 @@ final class RMCharacterViewController: UIViewController {
             characterListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 32),
         ])
         characterListView.delegate = self
+    }
+    
+    @objc private func didTapSearch() {
+        let vc = RMSearchViewController(config: .init(type: .character))
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
     }
 
 }

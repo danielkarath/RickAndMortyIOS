@@ -136,8 +136,18 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
     public func configure(with viewModel: RMCharacterEpisodeCollectionViewCellViewModel) {
         viewModel.registerForData { [weak self] data in
             self?.titleLabel.text = data.name ?? "Unknown title"
-            self?.episodeLabel.text = "Episode " + (data.episode.dropFirst(3)).dropFirst()
-            self?.seasonLabel.text = "Season " + (data.episode.dropLast(3)).dropFirst() //The API displays in one string "episode" both the season and the episode
+            
+            var episodeNumber = (data.episode.dropFirst(3)).dropFirst()
+            if episodeNumber.first == "0" {
+                episodeNumber = episodeNumber.dropFirst()
+            }
+            self?.episodeLabel.text = "Episode " + episodeNumber
+            
+            var seasonNumber = (data.episode.dropLast(3)).dropFirst()
+            if seasonNumber.first == "0" {
+                seasonNumber = seasonNumber.dropFirst()
+            }
+            self?.seasonLabel.text = "Season " + seasonNumber
             self?.airDateLabel.text = "Aired on " + data.air_date
             self?.imageView.image = UIImage(named: (data.name ?? "Pilot"))
         }

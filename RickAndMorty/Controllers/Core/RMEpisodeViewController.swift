@@ -17,6 +17,15 @@ final class RMEpisodeViewController: UIViewController {
         overrideUserInterfaceStyle = .dark
         title = "Episodes"
         setupConstraints()
+        addSearchButton()
+    }
+    
+    private func addSearchButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .search,
+            target: self,
+            action: #selector(didTapSearch)
+        )
     }
     
     private func setupConstraints() {
@@ -28,6 +37,10 @@ final class RMEpisodeViewController: UIViewController {
             episodeListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 32),
         ])
         episodeListView.delegate = self
+    }
+    
+    @objc private func didTapSearch() {
+        
     }
 
 }
