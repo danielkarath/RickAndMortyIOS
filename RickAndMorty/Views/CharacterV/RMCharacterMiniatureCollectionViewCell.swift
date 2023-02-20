@@ -1,21 +1,17 @@
 //
-//  RMCharacterCollectionViewCell.swift
+//  RMCharacterMiniatureCollectionViewCell.swift
 //  RickAndMorty
 //
-//  Created by Daniel Karath on 1/22/23.
-//
-
+//  Created by Daniel Karath on 2/20/23.
 import UIKit
 
 ///Single cell for a character
-final class RMCharacterCollectionViewCell: UICollectionViewCell {
-    static let identifier: String = "RMCharacterCollectionViewCell"
+final class RMCharacterMiniatureCollectionViewCell: UICollectionViewCell {
+    static let cellIdentifier: String = "RMCharacterMiniatureCollectionViewCell"
     
     let detailBlurView: UIVisualEffectView = {
         let view = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         view.layer.zPosition = 3
-        //view.layer.cornerRadius = 0
-        //view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         view.backgroundColor = RMConstants.midBackgroundColor.withAlphaComponent(0.03)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
@@ -47,30 +43,21 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.layer.zPosition = 5
         label.text = "name sample text"
+        label.numberOfLines = 0
         label.textColor = RMConstants.highlightedTextColor
-        label.font = RMConstants.setFont(fontSize: 18, isBold: true)
+        label.font = RMConstants.setFont(fontSize: 9, isBold: true)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let statusLabel: UILabel = {
-        let label = UILabel()
-        label.layer.zPosition = 4
-        label.text = "status sample text"
-        label.textColor = RMConstants.secondaryTextColor
-        label.font = RMConstants.setFont(fontSize: 12, isBold: false)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    //MARK: Init 
+    //MARK: Init
     
     override init(frame: CGRect) {
         super.init(frame:  frame)
         overrideUserInterfaceStyle = .dark
         contentView.backgroundColor = RMConstants.midBackgroundColor
         contentView.layer.cornerRadius = 16
-        contentView.addSubviews(imageView, nameLabel, statusLabel)
+        contentView.addSubviews(imageView, nameLabel)
         imageView.addSubviews(detailViewColorView, detailBlurView)
         setupConstraints()
         setupGradientView(view: detailViewColorView)
@@ -82,6 +69,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupConstraints() {
+        let textViewHeight: CGFloat = 26
         NSLayoutConstraint.activate([
             
             imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
@@ -92,22 +80,17 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
             detailViewColorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
             detailViewColorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             detailViewColorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            detailViewColorView.heightAnchor.constraint(equalToConstant: 48),
+            detailViewColorView.heightAnchor.constraint(equalToConstant: textViewHeight),
             
             detailBlurView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
             detailBlurView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             detailBlurView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            detailBlurView.heightAnchor.constraint(equalToConstant: 48),
+            detailBlurView.heightAnchor.constraint(equalToConstant: textViewHeight),
             
-            statusLabel.heightAnchor.constraint(equalToConstant: 20),
-            statusLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            statusLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            statusLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
-            
-            nameLabel.heightAnchor.constraint(equalToConstant: 40),
+            nameLabel.heightAnchor.constraint(equalToConstant: 30),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            nameLabel.bottomAnchor.constraint(equalTo: statusLabel.topAnchor, constant: 10),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -2),
+            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 2),
 
         ])
     }
@@ -134,13 +117,11 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         imageView.image = nil
         nameLabel.text = nil
-        statusLabel.text = nil
     }
     
     public func configure(with viewModel: RMCharacterCollectionViewCellViewModel) {
         contentView.layer.cornerRadius = 8
         nameLabel.text = viewModel.characterName
-        statusLabel.text = viewModel.characterStatus
         viewModel.fetchImage { [weak self] result in
             switch result {
             case .failure(let error):

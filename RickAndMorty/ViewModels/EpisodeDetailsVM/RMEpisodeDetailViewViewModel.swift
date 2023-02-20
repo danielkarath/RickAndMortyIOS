@@ -30,7 +30,7 @@ final class RMEpisodeDetailViewViewModel: NSObject {
     //MARK: - Public
     public weak var delegate: RMEpisodeDetailViewViewModelDelegate?
     
-    public private(set) var sections: [SectionType] = [] //this means that it's publicly readable but can only write it in this class
+    public private(set) var cellViewModels: [SectionType] = [] //this means that it's publicly readable but can only write it in this class
     
     //MARK: - Init
     init(endpointURL: URL?) {
@@ -46,7 +46,7 @@ final class RMEpisodeDetailViewViewModel: NSObject {
         }
         let episode = dataTuple.episode
         let characters = dataTuple.characters
-        sections = [
+        cellViewModels = [
             .information(viewModels: [
                 .init(title: "Episode Title", value: episode.name),
                 .init(title: "Air date", value: episode.air_date),
