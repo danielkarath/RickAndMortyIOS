@@ -8,7 +8,6 @@
 import UIKit
 
 final class RMEpisodeDetailViewController: UIViewController {
-
     private let viewModel: RMEpisodeDetailViewViewModel
     
     private let detailView = RMEpisodeDetailView()
@@ -37,6 +36,7 @@ final class RMEpisodeDetailViewController: UIViewController {
         view.backgroundColor = RMConstants.darkBackgroundColor
         view.addSubview(detailView)
         addConstraints()
+        detailView.delegate = self
         viewModel.delegate = self
         viewModel.fetchEpisodeData()
     }
@@ -61,5 +61,13 @@ final class RMEpisodeDetailViewController: UIViewController {
 extension RMEpisodeDetailViewController: RMEpisodeDetailViewViewModelDelegate {
     func didFetchEpisodeDetails() {
         detailView.configure(with: viewModel)
+    }
+}
+
+extension RMEpisodeDetailViewController: RMEpisodeDetailViewDelegate {
+    func rmEpisodeDetailView(_ detailView: RMEpisodeDetailView, didSelect character: RMCharacter) {
+        let vc = RMCharacterDetailViewController(viewModel: .init(character: character))
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

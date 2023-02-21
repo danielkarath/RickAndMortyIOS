@@ -30,6 +30,11 @@ final class RMEpisodeDetailViewViewModel: NSObject {
     //MARK: - Public
     public weak var delegate: RMEpisodeDetailViewViewModelDelegate?
     
+    public func character(at index: Int) -> RMCharacter? {
+        guard let dataTuple = dataTuple else { return nil }
+        return dataTuple.characters[index]
+    }
+    
     public private(set) var cellViewModels: [SectionType] = [] //this means that it's publicly readable but can only write it in this class
     
     //MARK: - Init
@@ -46,12 +51,13 @@ final class RMEpisodeDetailViewViewModel: NSObject {
         }
         let episode = dataTuple.episode
         let characters = dataTuple.characters
+        let episodeCreatedString = generateCreateDate(with: episode.created)
         cellViewModels = [
             .information(viewModels: [
                 .init(title: "Episode Title", value: episode.name),
                 .init(title: "Air date", value: episode.air_date),
                 .init(title: "Episode", value: episode.episode),
-                .init(title: "Created", value: episode.created)
+                .init(title: "Created", value: episodeCreatedString)
             ]),
             .characters(viewModel: characters.compactMap({ character in
                 return RMCharacterCollectionViewCellViewModel(
@@ -113,5 +119,28 @@ final class RMEpisodeDetailViewViewModel: NSObject {
                 characters: characters
             )
         }
+    }
+    
+    private func generateCreateDate(with createdString: String) -> String {
+        var returnString: String = ""
+        let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            formatter.timeZone = .current
+            return formatter
+        }()
+        
+        let shortDateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
+            return formatter
+        }()
+        
+        if let date = dateFormatter.date(from: createdString) {
+            returnString = shortDateFormatter.string(from: date) ?? ""
+        }
+        
+        return returnString
     }
 }
