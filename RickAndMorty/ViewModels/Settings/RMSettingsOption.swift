@@ -11,10 +11,29 @@ enum RMSettingsOption: CaseIterable {
     case about
     case rateApp
     case contact
-    case terms
+    case apiReference
     case privacy
     case viewSerries
     case viewCode
+    
+    var targetURL: URL? {
+        switch self {
+        case .about:
+            return URL(string: "https://danielkarath.com")
+        case .rateApp:
+            return nil
+        case .contact:
+            return nil
+        case .apiReference:
+            return URL(string: "https://rickandmortyapi.com")
+        case .privacy:
+            return URL(string: "https://www.iubenda.com/privacy-policy/93547013")
+        case .viewSerries:
+            return URL(string: "https://www.youtube.com/watch?v=EZpZDuOAFKE&list=PL5PR3UyfTWvdl4Ya_2veOB6TM16FXuv4y")
+        case .viewCode:
+            return URL(string: "https://github.com/danielkarath/RickAndMortyIOS")
+        }
+    }
     
     var displayTitle: String {
         switch self {
@@ -24,8 +43,8 @@ enum RMSettingsOption: CaseIterable {
             return "Rate App"
         case .contact:
             return "Contact Developer"
-        case .terms:
-            return "Terms & Conditions"
+        case .apiReference:
+            return "API Reference"
         case .privacy:
             return "Privacy Policy"
         case .viewSerries:
@@ -44,7 +63,7 @@ enum RMSettingsOption: CaseIterable {
             return .systemYellow
         case .contact:
             return .systemOrange
-        case .terms:
+        case .apiReference:
             return .systemPurple
         case .privacy:
             return .systemCyan
@@ -63,7 +82,7 @@ enum RMSettingsOption: CaseIterable {
             return UIImage(systemName: "star.fill")
         case .contact:
             return UIImage(systemName: "envelope.fill")
-        case .terms:
+        case .apiReference:
             return UIImage(systemName: "doc.text")
         case .privacy:
             return UIImage(systemName: "lock.shield")

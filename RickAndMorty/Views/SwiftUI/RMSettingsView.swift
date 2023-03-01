@@ -10,7 +10,7 @@ import SwiftUI
 struct RMSettingsView: View {
     
     let viewModel: RMSettingsViewViewModel
-    
+        
     init(viewModel: RMSettingsViewViewModel) {
         self.viewModel = viewModel
     }
@@ -34,8 +34,15 @@ struct RMSettingsView: View {
                             .padding(.trailing, 6)
                     }
                     Text("\(viewModel.title)")
+                    Spacer()
                 }
+                .contentShape(Rectangle())
+                .listStyle(PlainListStyle())
+                .foregroundColor(.white) // apply a default color to all list items
                 .padding(4)
+                .onTapGesture {
+                    viewModel.onTapHandler(viewModel.type)
+                }
             }
         }
     }
@@ -46,7 +53,10 @@ struct RMSettingsView_Previews: PreviewProvider {
         RMSettingsView(
             viewModel: .init(
                 cellViewModels: RMSettingsOption.allCases.compactMap({
-                    return RMSettingsCellViewModel(type: $0)
+                    return RMSettingsCellViewModel(type: $0, onTapHandler: {
+                        option in
+                        
+                    })
                 })
             )
         )
