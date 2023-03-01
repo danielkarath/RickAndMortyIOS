@@ -17,6 +17,8 @@ final class RMSettingsViewController: UIViewController, MFMailComposeViewControl
     
     private var settingsSwiftUIControllerView: UIHostingController<RMSettingsView>?
     
+    private var didRateApp = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .dark
@@ -68,9 +70,23 @@ final class RMSettingsViewController: UIViewController, MFMailComposeViewControl
             return
         }
         
-        let safariViewController = SFSafariViewController(url: url)
-        safariViewController.modalPresentationStyle = .popover
-        present(safariViewController, animated: true)
+        if option == .viewSerries {
+            let YoutubeUser =  "@iOSAcademy"
+                let appURL = NSURL(string: "youtube://www.youtube.com/watch?v=EZpZDuOAFKE&list=PL5PR3UyfTWvdl4Ya_2veOB6TM16FXuv4y")!
+                let webURL = NSURL(string: "https://www.youtube.com/watch?v=EZpZDuOAFKE&list=PL5PR3UyfTWvdl4Ya_2veOB6TM16FXuv4y")!
+                let application = UIApplication.shared
+
+                if application.canOpenURL(appURL as URL) {
+                    application.open(appURL as URL)
+                } else {
+                    // if Youtube app is not installed, open URL inside Safari
+                    application.open(webURL as URL)
+                }
+        } else {
+            let safariViewController = SFSafariViewController(url: url)
+            safariViewController.modalPresentationStyle = .popover
+            present(safariViewController, animated: true)
+        }
         
     }
     
@@ -79,7 +95,15 @@ final class RMSettingsViewController: UIViewController, MFMailComposeViewControl
             print("No scene found for Rate window")
             return
         }
-        SKStoreReviewController.requestReview(in: scene)
+        
+        if !didRateApp {
+            didRateApp = true
+            SKStoreReviewController.requestReview(in: scene)
+        } else {
+            if let url = URL(string: "itms-apps://itunes.apple.com") { ///app/id0000000000  - add your app url to the end here
+                UIApplication.shared.open(url)
+            }
+        }
         
     }
     
