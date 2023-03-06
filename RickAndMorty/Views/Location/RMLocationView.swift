@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol RMLocationViewDelegate: AnyObject {
+    func rmLocationView(_ locationView: RMLocationView, didSelect location: RMLocation)
+}
+
 class RMLocationView: UIView {
+    
+    public weak var delegate: RMLocationViewDelegate?
     
     private var viewModel: RMLocationViewViewModel? {
         didSet {
@@ -84,7 +90,13 @@ class RMLocationView: UIView {
 extension RMLocationView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        //Notify controller of selection
+        guard let locationModel = viewModel?.location(at: indexPath.row) else {
+            return
+        }
+        delegate?.rmLocationView(
+            self,
+            didSelect: locationModel
+        )
     }
 }
 
@@ -105,7 +117,7 @@ extension RMLocationView: UITableViewDataSource {
             fatalError()
         }
         let cellViewModel = cellViewModels[indexPath.row]
-        cell.textLabel?.text = cellViewModel.name
+        cell.configure(with: cellViewModel)
         return cell
     }
     

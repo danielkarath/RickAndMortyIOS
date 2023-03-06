@@ -22,11 +22,20 @@ struct RMLocationTableViewCellViewModel: Hashable, Equatable {
     }
     
     public var type: String {
-        return location.type
+        return "Type: " + location.type
     }
     
     public var dimension: String {
-        return location.dimension
+        var returnString: String = location.dimension
+        if location.dimension != nil {
+            returnString = returnString.replacingOccurrences(of: "Dimension", with: "")
+        }
+        if returnString == "unknown" {
+            returnString = ""
+        } else {
+            returnString = "Dimension: " + returnString
+        }
+        return returnString
     }
     
     static func == (lhs: RMLocationTableViewCellViewModel, rhs: RMLocationTableViewCellViewModel) -> Bool {
