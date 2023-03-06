@@ -25,7 +25,7 @@ class RMLocationView: UIView {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.alpha = 0
         tableView.isHidden = true
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(RMLocationTableViewCell.self, forCellReuseIdentifier: RMLocationTableViewCell.cellIdentifier)
         return tableView
     }()
     
@@ -45,6 +45,7 @@ class RMLocationView: UIView {
         addSubviews(locationTableView, spinner)
         spinner.startAnimating()
         addConstraints()
+        configureTableView()
     }
     
     required init?(coder: NSCoder) {
@@ -52,7 +53,6 @@ class RMLocationView: UIView {
     }
     
     //MARK: - Private
-    
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
@@ -68,9 +68,48 @@ class RMLocationView: UIView {
         ])
     }
     
+    private func configureTableView() {
+        locationTableView.delegate = self
+        locationTableView.dataSource = self
+        
+    }
+    
     //MARK: - Public
     public func configure(with viewModel: RMLocationViewViewModel) {
         self.viewModel = viewModel
     }
     
+}
+
+extension RMLocationView: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        //Notify controller of selection
+    }
+}
+
+extension RMLocationView: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel?.cellViewModels.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cellViewModels = viewModel?.cellViewModels else {
+            fatalError()
+        }
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: RMLocationTableViewCell.cellIdentifier,
+            for: indexPath
+        ) as? RMLocationTableViewCell else {
+            fatalError()
+        }
+        let cellViewModel = cellViewModels[indexPath.row]
+        cell.textLabel?.text = cellViewModel.name
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
 }
