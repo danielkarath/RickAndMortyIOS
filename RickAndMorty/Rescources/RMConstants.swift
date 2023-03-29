@@ -21,7 +21,7 @@ struct RMConstants {
     static let midBackgroundColor: UIColor = UIColor(red: 24/255, green: 24/255, blue: 28/255, alpha: 1.0)
     
     ///The activeBackgroundColor is the UIColor for active or highlighted, backgrounds. It's the same color as the keyboard
-    static let activeBackgroundColor: UIColor = UIColor(red: 58/255, green: 58/255, blue: 59/255, alpha: 1.0)
+    static let activeBackgroundColor: UIColor = UIColor(red: 42/255, green: 42/255, blue: 47/255, alpha: 1.0)
     
     
     //MARK: Text colors

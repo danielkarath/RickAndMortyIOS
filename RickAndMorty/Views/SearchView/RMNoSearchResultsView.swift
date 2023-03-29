@@ -33,6 +33,7 @@ final class RMNoSearchResultsView: UIView {
         super.init(frame: frame)
         backgroundColor = RMConstants.darkBackgroundColor
         translatesAutoresizingMaskIntoConstraints = false
+        isHidden = true
         addSubviews(iconImageView, label)
         addConstraints()
         configure()

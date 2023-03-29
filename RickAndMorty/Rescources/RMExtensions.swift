@@ -15,6 +15,14 @@ extension UIView {
     }
 }
 
+extension UISearchBar {
+    
+    /// Removes the rectangualar black background around the UISearchBar by adding an empty UIImage to it.
+    func removeBackground() {
+        self.backgroundImage = UIImage()
+    }
+}
+
 extension String {
     func addWhitespaceBeforeCapitalLetters() -> String {
         guard !self.isEmpty else { return self }
