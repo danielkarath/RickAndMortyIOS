@@ -9,17 +9,31 @@ import UIKit
 
 // Configurable controller to search using the Rick and Morty API filter
 final class RMSearchViewController: UIViewController {
-
+    
+    /// Configuration options for the search session
     struct Config {
         enum `Type` {
             case character
             case episode
             case location
+            
+            var title: String {
+                switch self {
+                case .character:
+                    return "Search Characters"
+                case .episode:
+                    return "Search Episodes"
+                case .location:
+                    return "Search Locations"
+                }
+            }
         }
         let type: `Type`
     }
     
     private let config: Config
+    
+    //MARK: - Init
     
     init(config: Config) {
         self.config = config
@@ -30,9 +44,11 @@ final class RMSearchViewController: UIViewController {
         fatalError("Unsupported")
     }
     
+    //MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Search"
+        title = config.type.title
         view.backgroundColor = RMConstants.darkBackgroundColor
     }
 

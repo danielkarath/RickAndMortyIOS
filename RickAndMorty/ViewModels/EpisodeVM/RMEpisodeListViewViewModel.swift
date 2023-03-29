@@ -168,7 +168,6 @@ extension RMEpisodeListViewViewModel: UICollectionViewDataSource, UICollectionVi
 
 extension RMEpisodeListViewViewModel: UIScrollViewDelegate {
     
-    
     /// When there are additional characters available, the activityIndicator will appear once while loading them once scrolled down.
     /// - Parameter scrollView: The collectionViews scrollview
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
