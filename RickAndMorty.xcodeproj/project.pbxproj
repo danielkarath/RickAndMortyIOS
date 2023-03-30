@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3901BE6F29D5B5530099CE86 /* RMSearchOptionPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3901BE6E29D5B5530099CE86 /* RMSearchOptionPickerViewController.swift */; };
 		390497B12974948300FD3D7A /* RMGetAllCharactersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390497B02974948300FD3D7A /* RMGetAllCharactersResponse.swift */; };
 		390CC96C2996B5D500492350 /* RMCharacterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390CC96B2996B5D500492350 /* RMCharacterDetailViewController.swift */; };
 		390CC96E2996B6C400492350 /* RMCharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390CC96D2996B6C400492350 /* RMCharacterDetailView.swift */; };
@@ -76,6 +77,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3901BE6E29D5B5530099CE86 /* RMSearchOptionPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSearchOptionPickerViewController.swift; sourceTree = "<group>"; };
 		390497B02974948300FD3D7A /* RMGetAllCharactersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMGetAllCharactersResponse.swift; sourceTree = "<group>"; };
 		390CC96B2996B5D500492350 /* RMCharacterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterDetailViewController.swift; sourceTree = "<group>"; };
 		390CC96D2996B6C400492350 /* RMCharacterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterDetailView.swift; sourceTree = "<group>"; };
@@ -157,6 +159,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3901BE7029D5B6930099CE86 /* SearchVC */ = {
+			isa = PBXGroup;
+			children = (
+				392CCA0529A2519C0036B7D9 /* RMSearchViewController.swift */,
+				3901BE6E29D5B5530099CE86 /* RMSearchOptionPickerViewController.swift */,
+			);
+			path = SearchVC;
+			sourceTree = "<group>";
+		};
 		390497AC2974942700FD3D7A /* DataTypes */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,7 +198,7 @@
 				390CC96B2996B5D500492350 /* RMCharacterDetailViewController.swift */,
 				393643EC29B65BDB00293323 /* RMLocationDetailViewController.swift */,
 				39CD814F299D051E00FFFB44 /* RMEpisodeDetailViewController.swift */,
-				392CCA0529A2519C0036B7D9 /* RMSearchViewController.swift */,
+				3901BE7029D5B6930099CE86 /* SearchVC */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -564,6 +575,7 @@
 				399D2955299A77D8005F0158 /* RMCharacterInfoCollectionViewCell.swift in Sources */,
 				393643F029B65F5400293323 /* RMLocationDetailView.swift in Sources */,
 				390CC96C2996B5D500492350 /* RMCharacterDetailViewController.swift in Sources */,
+				3901BE6F29D5B5530099CE86 /* RMSearchOptionPickerViewController.swift in Sources */,
 				393643E729B63AE800293323 /* RMGetLocationsResponse.swift in Sources */,
 				39CD8150299D051E00FFFB44 /* RMEpisodeDetailViewController.swift in Sources */,
 				39E52FE02975BC3900C7EE6D /* RMCharacterListViewViewModel.swift in Sources */,

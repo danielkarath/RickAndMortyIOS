@@ -14,7 +14,52 @@ final class RMSearchInputViewViewModel {
     enum DynamicOption: String {
         case status = "Status"
         case gender = "Gender"
+        case species = "Species"
         case locationType = "Location Type"
+        
+        var choices: [String] {
+            switch self {
+            case .status:
+                return [
+                    "alive",
+                    "dead",
+                    "unknown"
+                ]
+            case .gender:
+                return [
+                    "female",
+                    "male",
+                    "genderless",
+                    "unknown"
+                ]
+            case .species:
+                return [
+                    "human",
+                    "humanoid",
+                    "robot",
+                    "animal",
+                    "disease",
+                    "cronenberg",
+                    "mythological creature",
+                    "alien",
+                    "poopybutthole",
+                    "unknown"
+                ]
+            case .locationType:
+                return [
+                    "planet",
+                    "cluster",
+                    "space station",
+                    "microverse",
+                    "dream",
+                    "tv",
+                    "fantasy town",
+                    "resort"
+                ]
+            default:
+                fatalError()
+            }
+        }
     }
     
     //MARK: - Init
@@ -40,7 +85,7 @@ final class RMSearchInputViewViewModel {
     public var options: [DynamicOption] {
         switch self.type {
         case .character:
-            return [.status, .gender]
+            return [.status, .gender, .species]
         case .location:
             return [.locationType]
         case .episode:
