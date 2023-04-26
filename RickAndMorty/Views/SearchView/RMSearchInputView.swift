@@ -26,6 +26,8 @@ final class RMSearchInputView: UIView {
         }
     }
     
+    private var stackView: UIStackView?
+    
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
@@ -99,6 +101,7 @@ final class RMSearchInputView: UIView {
     private func createOptionSelectionViews(options: [RMSearchInputViewViewModel.DynamicOption]) {
         if options.count > 0 {
             let stackView = generateOptionsStackView()
+            self.stackView = stackView
             for x in 0..<options.count {
                 let option = options[x]
                 let button = generateButton(with: option, tag: x)
@@ -125,5 +128,25 @@ final class RMSearchInputView: UIView {
         if !searchBar.isFirstResponder {
             searchBar.becomeFirstResponder()
         }
+    }
+    
+    public func update(option: RMSearchInputViewViewModel.DynamicOption, value: String) {
+        guard let buttons = self.stackView?.arrangedSubviews,
+              let allOptions = viewModel?.options,
+              let index = allOptions.firstIndex(of: option),
+              let button: UIButton = buttons[index] as? UIButton else {
+            return
+        }
+        //button.setTitle(value, for: .normal)
+        button.setAttributedTitle(
+            NSAttributedString(
+                string: value.capitalized,
+                attributes: [
+                    .font: RMConstants.setFont(fontSize: 18, isBold: false),
+                    .foregroundColor: RMConstants.highlightedTextColor
+                ]
+            ),
+            for: .normal
+        )
     }
 }
